@@ -1,4 +1,10 @@
+#!/usr/bin/python3
+"""Module to print list of ints of pascals triangle"""
+
+
 def pascal_triangle(n):
+    """Function displays list of lists of ints representing
+    pascal's triangle of n"""
     triangle = []
 
     if n <= 0:
