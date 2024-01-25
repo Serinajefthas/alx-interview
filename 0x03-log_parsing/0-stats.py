@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+"""script reads metrics from stdin and prints statistics
+Log parsing"""
+
 import sys
-import signal
-"""script reads metrics from stdin and prints statistics"""
 
 
 def stats_output(stats: dict, size: int) -> None:
