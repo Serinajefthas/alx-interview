@@ -5,19 +5,18 @@ Log parsing"""
 import sys
 
 
-def stats_output(stats: dict, size: int) -> None:
-    """prints metric stats"""
-    print("File size {:d}".format(size))
-    for i, j in sorted(stats.items()):
-        if j:
-            print("{}: {}".format(i, j))
-
-
 if __name__ == '__main__':
     """reads metrics from stdin"""
     size, cnt = 0, 0
     codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
     stats = {key: 0 for key in codes}
+
+    def stats_output(stats: dict, size: int) -> None:
+        """prints metric stats"""
+        print("File size {:d}".format(size))
+        for i, j in sorted(stats.items()):
+            if j:
+                print("{}: {}".format(i, j))
 
     try:
         for line in sys.stdin:
