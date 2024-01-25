@@ -13,7 +13,7 @@ def stats_output(stats: dict, size: int) -> None:
             print("{}: {}".format(i, j))
 
 
-def main() -> None:
+if __name__ == '__main__':
     """reads metrics from stdin"""
     size, cnt = 0, 0
     codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
@@ -27,6 +27,8 @@ def main() -> None:
                 status_code = info[-2]
                 if status_code in stats:
                     stats[status_code] += 1
+            except BaseException:
+                pass
             try:
                 size += int(info[-1])
             except BaseException:
@@ -37,7 +39,3 @@ def main() -> None:
     except KeyboardInterrupt:
         stats_output(stats, size)
         raise
-
-
-if __name__ == '__main__':
-    main()
