@@ -1,40 +1,40 @@
 #!/usr/bin/python3
-"""script reads metrics from stdin and prints statistics
-Log parsing"""
+"""
+Log parsing
+"""
 
 import sys
 
-
 if __name__ == '__main__':
-    """reads metrics from stdin"""
-    size, cnt = 0, 0
-    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
-    stats = {key: 0 for key in codes}
 
-    def stats_output(stats: dict, size: int) -> None:
-        """prints metric stats"""
-        print("File size {:d}".format(size))
-        for i, j in sorted(stats.items()):
-            if j:
-                print("{}: {}".format(i, j))
+    filesize, count = 0, 0
+    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+    stats = {k: 0 for k in codes}
+
+    def print_stats(stats: dict, file_size: int) -> None:
+        """print statistics"""
+        print("File size: {:d}".format(filesize))
+        for k, v in sorted(stats.items()):
+            if v:
+                print("{}: {}".format(k, v))
 
     try:
         for line in sys.stdin:
-            cnt += 1
-            info = line.split()
+            count += 1
+            data = line.split()
             try:
-                status_code = info[-2]
+                status_code = data[-2]
                 if status_code in stats:
                     stats[status_code] += 1
             except BaseException:
                 pass
             try:
-                size += int(info[-1])
+                filesize += int(data[-1])
             except BaseException:
                 pass
-            if cnt % 10 == 0:
-                stats_output(stats, size)
-        stats_output(stats, size)
+            if count % 10 == 0:
+                print_stats(stats, filesize)
+        print_stats(stats, filesize)
     except KeyboardInterrupt:
-        stats_output(stats, size)
+        print_stats(stats, filesize)
         raise
