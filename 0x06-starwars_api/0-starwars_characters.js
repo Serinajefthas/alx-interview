@@ -1,39 +1,37 @@
 #!/usr/bin/node
 const request = require('request');
+const movie_id = process.argv[2];
 
-function printMovieCharacters(movieId) {
-    const apiUrl = `https://swapi-api.alx-tools.com/films/${movieId}`;
+const apiUrl = `https://swapi-api.alx-tools.com/films/${movieId}`;
 
-    request(apiUrl, (error, response, body) => {
-        if (error) {
-            console.error('Error:', error);
-            return;
-        }
+request(apiUrl, (error, response, body) => {
+	if (error)
+		console.error('Error:', error);
+	else if (response.statusCode !== 200)
+        	    console.error('Status:', response.statusCode);
+	else {
+		const movieData = JSON.parse(body);
+        	const charactersUrls = movieData.characters;
 
-        if (response.statusCode !== 200) {
-            console.error('Status:', response.statusCode);
-            return;
-        }
-
-        const movieData = JSON.parse(body);
-        const charactersUrls = movieData.characters;
-
-        // Fetch data for each character URL
-        charactersUrls.forEach(characterUrl => {
-            request(characterUrl, (charError, charResponse, charBody) => {
-                if (charError) {
-                    console.error('Error:', charError);
-                    return;
-                }
-
-                if (charResponse.statusCode !== 200) {
-                    console.error('Status:', charResponse.statusCode);
-                    return;
-                }
-
-                const characterData = JSON.parse(charBody);
-                console.log(characterData.name);
-            });
-        });
-    });
+		printMovieCharacters(characters, idx);
+	}
 });
+
+function (characters, idx) {
+	if (idx >= characters.length)
+		return;
+	const characterUrl = characters[index];
+	request(characterUrl, (error, response, body) => {
+        	if (error) {
+        		console.error('Error:', error);
+		}
+		else if (response.statusCode !== 200) {
+        		console.error('Status:', response.statusCode);
+        	}
+		else {
+			const characterData = JSON.parse(body);
+                	console.log(characterData.name);
+			printMovieCharacters(characters, idx + 1);
+		}
+	});
+}
