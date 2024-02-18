@@ -1,37 +1,38 @@
 #!/usr/bin/node
+
 const request = require('request');
 const movieId = process.argv[2];
 
-const apiUrl = 'https://swapi.dev/api/films/${movieId}/`;
+request(`https://swapi.dev/api/films/${movieId}/`, function (error, response, body) {
+  if (error) {
+    console.error('Error:', error);
+  } else if (response.statusCode !== 200) {
+    console.error('Unexpected status code:', response.statusCode);
+  } else {
+    const film = JSON.parse(body);
+    const characters = film.characters;
 
-request(apiUrl, function (error, response, body) {
-	if (error)
-		console.error('Error:', error);
-	else if (response.statusCode !== 200)
-        	    console.error('Status:', response.statusCode);
-	else {
-		const movieData = JSON.parse(body);
-        	const charactersUrls = movieData.characters;
-
-		printMovieCharacters(charactersUrls, id0);
-	}
+    fetchCharacters(characters, 0);
+  }
 });
 
-function printMovieCharacters(characters, idx) {
-	if (idx >= characters.length)
-		return;
-	const characterUrl = characters[idx];
-	request(characterUrl, function (error, response, body) {
-        	if (error) {
-        		console.error('Error:', error);
-		}
-		else if (response.statusCode !== 200) {
-        		console.error('Status:', response.statusCode);
-        	}
-		else {
-			const characterData = JSON.parse(body);
-                	console.log(characterData.name);
-			printMovieCharacters(characters, idx + 1);
-		}
-	});
+function fetchCharacters (characters, index) {
+  if (index >= characters.length) {
+    return;
+  }
+
+  const characterUrl = characters[index];
+
+  request(characterUrl, function (error, response, body) {
+    if (error) {
+      console.error('Error:', error);
+    } else if (response.statusCode !== 200) {
+      console.error('Unexpectedstatus code:', response.statusCode);
+    } else {
+      const character = JSON.parse(body);
+      console.log(character.name);
+
+      fetchCharacters(characters, index + 1);
+    }
+  });
 }
