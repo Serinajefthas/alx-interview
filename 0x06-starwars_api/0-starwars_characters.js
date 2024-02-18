@@ -4,7 +4,7 @@ const movie_id = process.argv[2];
 
 const apiUrl = `https://swapi-api.alx-tools.com/films/${movieId}`;
 
-request(apiUrl, (error, response, body) => {
+request(apiUrl, function (error, response, body) {
 	if (error)
 		console.error('Error:', error);
 	else if (response.statusCode !== 200)
@@ -21,7 +21,7 @@ function (characters, idx) {
 	if (idx >= characters.length)
 		return;
 	const characterUrl = characters[index];
-	request(characterUrl, (error, response, body) => {
+	request(characterUrl, function (error, response, body) {
         	if (error) {
         		console.error('Error:', error);
 		}
