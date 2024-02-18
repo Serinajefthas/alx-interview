@@ -1,8 +1,8 @@
 #!/usr/bin/node
 const request = require('request');
-const movie_id = process.argv[2];
+const movieId = process.argv[2];
 
-const apiUrl = `https://swapi-api.alx-tools.com/films/${movieId}`;
+const apiUrl = 'https://swapi-api.alx-tools.com/films/${movieId}`;
 
 request(apiUrl, function (error, response, body) {
 	if (error)
@@ -13,14 +13,14 @@ request(apiUrl, function (error, response, body) {
 		const movieData = JSON.parse(body);
         	const charactersUrls = movieData.characters;
 
-		printMovieCharacters(characters, idx);
+		printMovieCharacters(charactersUrls, id0);
 	}
 });
 
-function (characters, idx) {
+function printMovieCharacters(characters, idx) {
 	if (idx >= characters.length)
 		return;
-	const characterUrl = characters[index];
+	const characterUrl = characters[idx];
 	request(characterUrl, function (error, response, body) {
         	if (error) {
         		console.error('Error:', error);
