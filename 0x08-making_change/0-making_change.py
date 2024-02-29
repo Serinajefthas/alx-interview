@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """Module to determine fewest number coins for total amt"""
-import sys
 
 
 def makeChange(coins, total):
     """Function to determine fewest number coins for total amt"""
     if total <= 0:
         return 0
-    coins.sort(reverse=true)
+
+    coins.sort(reverse=True)
     coin_cnt = 0
 
     for coin in coins:
@@ -18,6 +18,7 @@ def makeChange(coins, total):
         coin_cnt += cnt
         if total == 0:
             break
+
     if total > 0:
         return -1
     return coin_cnt
