@@ -14,7 +14,7 @@ def isWinner(x, nums):
                 for i in range(p * p, n+1, p):
                     primes[i] = False
             p += 1
-        return primes
+        return [i for i in range(n+1) if primes[i]]
 
     maria_wins = ben_wins = 0
     for i in nums:
