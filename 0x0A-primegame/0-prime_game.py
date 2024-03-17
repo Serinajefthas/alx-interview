@@ -4,30 +4,28 @@
 
 def isWinner(x, nums):
     """Prime game function using Sieve of Eratothenes"""
-    def sieve_of_e(n):
-        """computes all primes no.s up to given no."""
-        primes = [True] * (n+1)
-        primes[0] = primes[1] = False
-        p = 2
-        while p * p <= n:
-            if primes[p]:
-                for i in range(p * p, n+1, p):
-                    primes[i] = False
-            p += 1
-        return [i for i in range(n+1) if primes[i]]
+    if x < 1 or not nums:
+        return -1
 
-    maria_wins = ben_wins = 0
-    for i in nums:
-        primes = sieve_of_e(i)
+    idx = maria_wins = ben_wins = 0
 
-        if len(primes) % 2 == 0:
-            ben_wins += 1
-        else:
+    for round in range(x):
+        numbers = [n for n in range(2, nums[round] + 1)]
+        """sieve of erathosas"""
+        while (idx < len(numbers)):
+            prime = numbers[idx]
+            sieve_idx = idx + prime
+            while (sieve_idx < len(numbers)):
+                numbers.pop(sieve_idx)
+                sieve_idx += prime - 1
+            idx += 1
+
+        cnt_prime = len(numbers)
+        if cnt_prime and cnt_prime % 2:
             maria_wins += 1
+        else:
+            ben_wins += 1
 
-    if maria_wins == ben_wins:
+    if ben_wins == maria_wins:
         return None
-    elif maria_wins > ben_wins:
-        return "Maria"
-    else:
-        return "Ben"
+    return 'Ben' if ben_wins > maria_wins else 'Maria'
